@@ -86,23 +86,24 @@ namespace FPSTest
             running_fps = fps;
             if (e.KeyCode == Keys.W) numOfPoints += 100;
             else if (e.KeyCode == Keys.S) numOfPoints -= 100;
+            else if (e.KeyCode == Keys.R) numOfPoints = 0; 
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            System.Drawing.Font font = new System.Drawing.Font("Ubuntu", 48);
+            System.Drawing.Font font = new System.Drawing.Font("Courier New", 48);
             System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
-            e.Graphics.DrawString(running_fps.ToString(), font, Brushes.Black, form.ClientSize.Width / 2, 0);
             for (int i = 0; i < numOfPoints; i++)
             {
-                e.Graphics.FillRectangle(Brushes.White, i, i, i, i);
+                e.Graphics.FillRectangle(Brushes.White, 100, 100, i % form.ClientSize.Width, 100);
             }
+            e.Graphics.DrawString(((int)running_fps).ToString(), font, Brushes.Black, 0, 0);
             for (int i = 0; i < numOfPoints; i++)
             {
-                Brush dullBrush = new System.Drawing.SolidBrush(new ColorDemo.HSLColor(((double)i % 960.0) / 4, 60.0, 120.0));
                 double t = 100 * Math.Sin(s / (200.0 / (i / 10.0)));
                 double v = 5 * Math.Cos(s / (200.0 / (i / 10.0)));
-                if (v < 0)
+                Brush dullBrush = new System.Drawing.SolidBrush(new ColorDemo.HSLColor((double)i % 960.0 / 4, 105.0 + 9 * v, 120.0));
+            if (v < 0)
                 {
                     e.Graphics.FillEllipse(dullBrush, baseX + (int)(i * 2) % form.ClientSize.Width, (baseY + (float)t), (int)v + 15, (int)v + 15);
                     e.Graphics.FillEllipse(dullBrush, baseX + (int)(i * 2) % form.ClientSize.Width, (baseY + (float)t) - 250, (int)v + 15, (int)v + 15);
@@ -111,9 +112,9 @@ namespace FPSTest
             }
             for (int i = 0; i < numOfPoints; i++)
             {
-                Brush brightBrush = new System.Drawing.SolidBrush(new ColorDemo.HSLColor(((double)i % 960.0)/4, 240.0, 120.0));
                 double t = 100 * Math.Sin(s / (200.0 / (i / 10.0)));
                 double v = 5 * Math.Cos(s / (200.0 / (i / 10.0)));
+                Brush brightBrush = new System.Drawing.SolidBrush(new ColorDemo.HSLColor(((double)i % 960.0) / 4, 195.0 + 9*v, 120.0));
                 if (v >= 0)
                 {
                     e.Graphics.FillEllipse(brightBrush, baseX + (int)(i * 2) % form.ClientSize.Width, (baseY + (float)t), (int)v + 15, (int)v + 15);
